@@ -1,17 +1,32 @@
-# This is a sample Python script.
+import flask
+import json
+import os
+import os
+# import dialogflow
+import requests
+import json
+# import pusher
+from flask import Flask, request, jsonify, render_template
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+app = flask.Flask(__name__)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    print("Hello world")
+@app.route('/')
+def home():
+    return "Hello world"
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.route('/', methods=['POST'])
+def webhook():
+    req = request.get_json(force=True)
+    print(req)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    return {
+        'fulfillmentText': 'Hello from the bot world'
+    }
+
+
+if __name__ == "__main__":
+    # app.secret_key = 'ItIsASecret'
+    app.debug = True
+    app.run(debug=True, port=5000)
